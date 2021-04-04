@@ -4,6 +4,7 @@ import net.observer.banwave.BanwaveBlatant;
 import net.observer.banwave.BanwaveGhost;
 import net.observer.banwave.BanwaveType;
 import net.observer.check.CheckManager;
+import net.observer.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,6 +29,8 @@ public final class Observer extends JavaPlugin {
     public void onEnable() {
 
         instance = this;
+
+        Config.updateConfig();
 
         banwaveGhost = new BanwaveGhost();
         banwaveBlatant = new BanwaveBlatant();

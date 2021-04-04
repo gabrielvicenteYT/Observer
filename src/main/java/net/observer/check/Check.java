@@ -141,6 +141,7 @@ public class Check extends PlayerListener {
 
     public void punishPlayer() {
         if (Config.PUNISHMENT_TYPE.equalsIgnoreCase("kick")) {
+            vl = 0;
             kickPlayer();
         } else if (Config.PUNISHMENT_TYPE.equalsIgnoreCase("ban")) {
             if (name.contains("Aim") || name.contains("AutoClicker") || name.contains("HitBox") || name.contains("Reach")
@@ -152,9 +153,7 @@ public class Check extends PlayerListener {
                     Observer.getInstance().ghostBanwaveList.add(player.getName());
                     Observer.getInstance().addBanwave(player.getName(), BanwaveType.GHOST);
                     for (Player staff : Bukkit.getOnlinePlayers()) {
-                        if (staff.hasPermission("Observer.alerts")) {
-                            staff.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bObserver &8» &b" + player.getName() + " &7was added to &bGHOST &7banwave."));
-                        }
+                        staff.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bObserver &8» &b" + player.getName() + " &7was added to &bGHOST &7banwave."));
                     }
                 }
             } else {
@@ -165,9 +164,7 @@ public class Check extends PlayerListener {
                     Observer.getInstance().blatantBanwaveList.add(player.getName());
                     Observer.getInstance().addBanwave(player.getName(), BanwaveType.BLATANT);
                     for (Player staff : Bukkit.getOnlinePlayers()) {
-                        if (staff.hasPermission("Observer.alerts")) {
-                            staff.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bObserver &8» &b" + player.getName() + " &7was added to &bBLATANT &7banwave."));
-                        }
+                        staff.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bObserver &8» &b" + player.getName() + " &7was added to &bBLATANT &7banwave."));
                     }
                 }
             }
@@ -184,7 +181,6 @@ public class Check extends PlayerListener {
                 vl = 0;
                 player.kickPlayer(Chat.getMessage("&bObserver &8» &bUnfair Advantage"));
                 Bukkit.broadcastMessage(Chat.getMessage("&bObserver &8» &b" + player.getName() + " &7was kicked for &bUnfair Advantage"));
-                Bukkit.getConsoleSender().sendMessage(Chat.getMessage("&bObserver &8> &b" + player.getName() + " &7was punished by check &b" + name));
             }
         });
     }
