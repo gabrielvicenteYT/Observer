@@ -7,6 +7,73 @@ ban-cmd:
 punishment-type:
 
 checks:
+  client:
+    client:
+      a:
+        enabled: true
+        punishable: true
+        experimental: false
+        min: 0
+        max: 1
+        reduce: 0.05
+        bufferCeil: 0
+        bufferMax: 0
+        bufferReduce: 0
+        preVlCeil: 0
+        preVlMax: 0
+        preVlReduce: 0
+      b:
+        enabled: true
+        punishable: true
+        experimental: false
+        min: 0
+        max: 1
+        reduce: 0.05
+        bufferCeil: 0
+        bufferMax: 0
+        bufferReduce: 0
+        preVlCeil: 0
+        preVlMax: 0
+        preVlReduce: 0
+      c:
+        enabled: true
+        punishable: true
+        experimental: false
+        min: 0
+        max: 1
+        reduce: 0.05
+        bufferCeil: 0
+        bufferMax: 0
+        bufferReduce: 0
+        preVlCeil: 0
+        preVlMax: 0
+        preVlReduce: 0
+      d:
+        enabled: true
+        punishable: true
+        experimental: false
+        min: 0
+        max: 1
+        reduce: 0.05
+        bufferCeil: 0
+        bufferMax: 0
+        bufferReduce: 0
+        preVlCeil: 0
+        preVlMax: 0
+        preVlReduce: 0
+      e:
+        enabled: true
+        punishable: true
+        experimental: false
+        min: 0
+        max: 1
+        reduce: 0.05
+        bufferCeil: 0
+        bufferMax: 0
+        bufferReduce: 0
+        preVlCeil: 0
+        preVlMax: 0
+        preVlReduce: 0
   other:
     test:
       enabled: true
