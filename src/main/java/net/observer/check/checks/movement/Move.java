@@ -43,6 +43,7 @@ public class Move extends Check {
     float landMovementFactor = 0;
     float jumpMovementFactor = 0;
     float airSpeed = 0.02F;
+    float stepHeight = 0.6F;
     double speedBuffer = 0;
 
     @Override
@@ -95,7 +96,7 @@ public class Move extends Check {
             if (diff > 0.13F) {
                 if (++speedBuffer > 2) {
                     speedBuffer = 2;
-                    fail("moved unexpectedly (Speed)", "diff: " + diff);
+                    fail("moved unexpectedly (MotionH)", "diff: " + diff);
                 }
             } else {
                 speedBuffer = MathUtil.rt(speedBuffer, 0.25);
@@ -113,7 +114,7 @@ public class Move extends Check {
             if (diff > 0.026F) {
                 if (++speedBuffer > 2) {
                     speedBuffer = 2;
-                    fail("moved unexpectedly (Speed)", "diff: " + diff);
+                    fail("moved unexpectedly (MotionH)", "diff: " + diff);
                 }
             } else {
                 speedBuffer = MathUtil.rt(speedBuffer, 0.25);
@@ -125,7 +126,9 @@ public class Move extends Check {
     }
 
     public void step(MoveEvent e) {
-
+        if (deltaY > stepHeight && e.isOnGround()) {
+            fail("moved unexpectedly (Step)", "deltaY: " + deltaY + "stepHeight: " + stepHeight);
+        }
     }
 
     public void groundspoof(MoveEvent e) {
