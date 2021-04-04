@@ -18,6 +18,8 @@ public class Move extends Check {
     double lastDelta = 0;
     float lastYaw = 0;
     // PLAYER DATA //
+    int air = 0;
+    int ground = 0;
     double playerX = 0;
     double playerY = 0;
     double playerZ = 0;
@@ -28,13 +30,15 @@ public class Move extends Check {
     float yaw = 0;
     boolean onGround = false;
     // CHECK DATA //
+    int serverAir = 0;
+    int serverGround = 0;
     double x = 0;
     double y = 0;
     double z = 0;
     double motionX = 0;
     double motionY = 0;
     double motionZ = 0;
-    boolean serverGround = false;
+    boolean serverOnGround = false;
     float landMovementFactor = 0;
     float jumpMovementFactor = 0;
     float airSpeed = 0.02F;
@@ -47,6 +51,7 @@ public class Move extends Check {
         lastDeltaY = deltaY;
         lastDeltaZ = deltaZ;
         lastDelta = delta;
+        lastYaw = yaw;
         // SETTING UP CURRENT VARIABLES //
         failed = false;
         playerX = e.getTo().getX();
@@ -71,7 +76,9 @@ public class Move extends Check {
     }
 
     public void updateCondition(MoveEvent e) {
-
+        air = e.isOnGround() ? 0 : Math.min(air + 1, 100);
+        ground = e.isOnGround() ? Math.min(ground + 1, 100) : 0;
+        landMovementFactor = e.getPlayer().isSprinting() ? 0.1F : 0.13F;
     }
 
     public void prediction(MoveEvent e) {
@@ -79,15 +86,25 @@ public class Move extends Check {
     }
 
     public void speed(MoveEvent e) {
-        if (e.isOnGround()) {
+        /*
+          basic horizontal prediction checks
+                                            */
+        if (ground > 2) {
             double predictionX = lastDeltaX * 0.6F * 0.91F;
             double predictionZ = lastDeltaZ * 0.6F * 0.91F;
             double diff = Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
-            debug("diff: &b" + diff);
-        } else {
+            if (diff > 0.13F) {
+                debug("diff: &b" + diff);
+            }
+        }
+
+        if (air > 2) {
             double predictionX = lastDeltaX * 0.91F;
             double predictionZ = lastDeltaZ * 0.91F;
             double diff = Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
+            if (diff > 0.026F) {
+                debug("diff: &b" + diff);
+            }
         }
     }
 
