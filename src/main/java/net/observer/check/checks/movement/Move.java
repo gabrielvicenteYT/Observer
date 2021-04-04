@@ -90,28 +90,36 @@ public class Move extends Check {
         if (ground > 2) {
             double predictionX = lastDeltaX * 0.6F * 0.91F;
             double predictionZ = lastDeltaZ * 0.6F * 0.91F;
+            double prediction = Math.hypot(predictionX, predictionZ) + 0.13F;
             double diff = deltaX == 0 ? deltaZ == 0 ? 0 : Math.abs(deltaZ - predictionZ) : deltaZ == 0 ? Math.abs(deltaX - predictionX) : Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
             if (diff > 0.13F) {
-                if (diff > 0.14F || ++speedBuffer > 2) {
+                if (++speedBuffer > 2) {
                     speedBuffer = 2;
                     fail("moved unexpectedly (Speed)", "diff: " + diff);
                 }
             } else {
                 speedBuffer = MathUtil.rt(speedBuffer, 0.25);
             }
+            if (delta > prediction) {
+                fail("moved unexpectedly (Speed)", "delta: " + delta, "prediction: " + prediction);
+            }
         }
 
         if (air > 2) {
             double predictionX = lastDeltaX * 0.91F;
             double predictionZ = lastDeltaZ * 0.91F;
+            double prediction = Math.hypot(predictionX, predictionZ) + 0.026F;
             double diff = deltaX == 0 ? deltaZ == 0 ? 0 : Math.abs(deltaZ - predictionZ) : deltaZ == 0 ? Math.abs(deltaX - predictionX) : Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
             if (diff > 0.026F) {
-                if (diff > 0.1F || ++speedBuffer > 2) {
+                if (++speedBuffer > 2) {
                     speedBuffer = 2;
                     fail("moved unexpectedly (Speed)", "diff: " + diff);
                 }
             } else {
                 speedBuffer = MathUtil.rt(speedBuffer, 0.25);
+            }
+            if (delta > prediction) {
+                fail("moved unexpectedly (Speed)", "delta: " + delta, "prediction: " + prediction);
             }
         }
     }
