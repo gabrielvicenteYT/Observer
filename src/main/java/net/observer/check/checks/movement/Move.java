@@ -15,4 +15,20 @@ public class Move extends Check {
     public void onMove(MoveEvent e) {
 
     }
+
+    public void prediction(MoveEvent e) {
+
+    }
+
+    public void speed(MoveEvent e) {
+
+    }
+
+    public void step(MoveEvent e) {
+
+    }
+
+    public void groundspoof(MoveEvent e) {
+
+    }
 }

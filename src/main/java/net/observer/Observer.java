@@ -35,6 +35,8 @@ public final class Observer extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(checkManager, instance);
 
+        this.saveDefaultConfig();
+
     }
 
     @Override
