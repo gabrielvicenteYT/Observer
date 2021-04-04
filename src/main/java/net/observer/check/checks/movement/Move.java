@@ -3,6 +3,7 @@ package net.observer.check.checks.movement;
 import com.outil.event.events.MoveEvent;
 import com.outil.event.events.PacketEvent;
 import com.outil.packet.type.C03PacketPlayer;
+import com.outil.util.MathUtil;
 import net.observer.check.Check;
 import org.bukkit.entity.Player;
 
@@ -42,7 +43,7 @@ public class Move extends Check {
     float landMovementFactor = 0;
     float jumpMovementFactor = 0;
     float airSpeed = 0.02F;
-    boolean failed = false;
+    double speedBuffer = 0;
 
     @Override
     public void onMove(MoveEvent e) {
@@ -53,7 +54,6 @@ public class Move extends Check {
         lastDelta = delta;
         lastYaw = yaw;
         // SETTING UP CURRENT VARIABLES //
-        failed = false;
         playerX = e.getTo().getX();
         playerY = e.getTo().getY();
         playerZ = e.getTo().getZ();
@@ -70,9 +70,7 @@ public class Move extends Check {
         step(e);
         groundspoof(e);
         // REDUCING VIOLATION LEVEL //
-        if (!failed) {
-            pass();
-        }
+        pass();
     }
 
     public void updateCondition(MoveEvent e) {
@@ -94,7 +92,11 @@ public class Move extends Check {
             double predictionZ = lastDeltaZ * 0.6F * 0.91F;
             double diff = Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
             if (diff > 0.13F) {
-                debug("diff: &b" + diff);
+                if (diff > 0.14F || ++speedBuffer > 2) {
+                    fail("moved unexpectedly (Speed)", "diff: " + diff);
+                }
+            } else {
+                speedBuffer = MathUtil.rt(speedBuffer, 0.25);
             }
         }
 
@@ -103,7 +105,11 @@ public class Move extends Check {
             double predictionZ = lastDeltaZ * 0.91F;
             double diff = Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
             if (diff > 0.026F) {
-                debug("diff: &b" + diff);
+                if (diff > 0.0325F || ++speedBuffer > 2) {
+                    fail("moved unexpectedly (Speed)", "diff: " + diff);
+                }
+            } else {
+                speedBuffer = MathUtil.rt(speedBuffer, 0.25);
             }
         }
     }
