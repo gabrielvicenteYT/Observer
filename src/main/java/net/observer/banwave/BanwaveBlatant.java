@@ -3,6 +3,7 @@ package net.observer.banwave;
 import com.outil.OUtil;
 import com.outil.event.OListener;
 import com.outil.event.events.ModEvent;
+import com.outil.event.events.MoveEvent;
 import com.outil.event.events.PacketEvent;
 
 public class BanwaveBlatant implements OListener {
@@ -17,6 +18,11 @@ public class BanwaveBlatant implements OListener {
 
     @Override
     public void onMod(ModEvent modEvent) {
+
+    }
+
+    @Override
+    public void onMove(MoveEvent moveEvent) {
 
     }
 }

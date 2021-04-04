@@ -1,6 +1,11 @@
 package net.observer.check;
 
-import net.observer.check.checks.other.Test;
+import net.observer.check.checks.client.*;
+import net.observer.check.checks.combat.*;
+import net.observer.check.checks.movement.*;
+import net.observer.check.checks.other.*;
+import net.observer.check.checks.packet.*;
+import net.observer.check.checks.world.*;
 import net.observer.config.Config;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,7 +33,7 @@ public class CheckManager implements Listener {
 
         // OTHER
         type = CheckType.OTHER;
-        name = "Test"; checks.add(new Test(player, name, getBooleans(name, type)[0], getBooleans(name, type)[1], getBooleans(name, type)[2], getIntegers(name, type)[0], getIntegers(name, type)[1], getDoubles(name, type)[0], getDoubles(name, type)[1], getDoubles(name, type)[2], getDoubles(name, type)[3], getDoubles(name, type)[4], getDoubles(name, type)[5], getDoubles(name, type)[6]));
+        name = "Move"; checks.add(new Move(player, name, getBooleans(name, type)[0], getBooleans(name, type)[1], getBooleans(name, type)[2], getIntegers(name, type)[0], getIntegers(name, type)[1], getDoubles(name, type)[0], getDoubles(name, type)[1], getDoubles(name, type)[2], getDoubles(name, type)[3], getDoubles(name, type)[4], getDoubles(name, type)[5], getDoubles(name, type)[6]));
         // PACKET
         type = CheckType.PACKET;
 
