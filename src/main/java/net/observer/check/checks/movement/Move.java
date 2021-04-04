@@ -93,6 +93,7 @@ public class Move extends Check {
             double diff = Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
             if (diff > 0.13F) {
                 if (diff > 0.14F || ++speedBuffer > 2) {
+                    speedBuffer = 2;
                     fail("moved unexpectedly (Speed)", "diff: " + diff);
                 }
             } else {
@@ -106,6 +107,7 @@ public class Move extends Check {
             double diff = Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
             if (diff > 0.026F) {
                 if (diff > 0.0325F || ++speedBuffer > 2) {
+                    speedBuffer = 2;
                     fail("moved unexpectedly (Speed)", "diff: " + diff);
                 }
             } else {

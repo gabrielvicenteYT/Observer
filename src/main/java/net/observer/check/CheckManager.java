@@ -30,10 +30,10 @@ public class CheckManager implements Listener {
 
         // MOVEMENT
         type = CheckType.MOVEMENT;
-
+        name = "Move"; checks.add(new Move(player, name, getBooleans(name, type)[0], getBooleans(name, type)[1], getBooleans(name, type)[2], getIntegers(name, type)[0], getIntegers(name, type)[1], getDoubles(name, type)[0], getDoubles(name, type)[1], getDoubles(name, type)[2], getDoubles(name, type)[3], getDoubles(name, type)[4], getDoubles(name, type)[5], getDoubles(name, type)[6]));
         // OTHER
         type = CheckType.OTHER;
-        name = "Move"; checks.add(new Move(player, name, getBooleans(name, type)[0], getBooleans(name, type)[1], getBooleans(name, type)[2], getIntegers(name, type)[0], getIntegers(name, type)[1], getDoubles(name, type)[0], getDoubles(name, type)[1], getDoubles(name, type)[2], getDoubles(name, type)[3], getDoubles(name, type)[4], getDoubles(name, type)[5], getDoubles(name, type)[6]));
+
         // PACKET
         type = CheckType.PACKET;
 
