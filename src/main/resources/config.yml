@@ -74,8 +74,8 @@ checks:
         preVlCeil: 0
         preVlMax: 0
         preVlReduce: 0
-  other:
-    test:
+  movement:
+    move:
       enabled: true
       punishable: true
       experimental: true
