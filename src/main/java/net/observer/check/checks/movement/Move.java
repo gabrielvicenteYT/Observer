@@ -90,7 +90,7 @@ public class Move extends Check {
         if (ground > 2) {
             double predictionX = lastDeltaX * 0.6F * 0.91F;
             double predictionZ = lastDeltaZ * 0.6F * 0.91F;
-            double diff = Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
+            double diff = deltaX == 0 ? deltaZ == 0 ? 0 : Math.abs(deltaZ - predictionZ) : deltaZ == 0 ? Math.abs(deltaX - predictionX) : Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
             if (diff > 0.13F) {
                 if (diff > 0.14F || ++speedBuffer > 2) {
                     speedBuffer = 2;
@@ -104,7 +104,7 @@ public class Move extends Check {
         if (air > 2) {
             double predictionX = lastDeltaX * 0.91F;
             double predictionZ = lastDeltaZ * 0.91F;
-            double diff = Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
+            double diff = deltaX == 0 ? deltaZ == 0 ? 0 : Math.abs(deltaZ - predictionZ) : deltaZ == 0 ? Math.abs(deltaX - predictionX) : Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
             if (diff > 0.026F) {
                 if (diff > 0.1F || ++speedBuffer > 2) {
                     speedBuffer = 2;
