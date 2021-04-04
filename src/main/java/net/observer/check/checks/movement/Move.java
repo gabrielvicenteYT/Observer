@@ -132,24 +132,25 @@ public class Move extends Check {
                                            */
         long rate = System.currentTimeMillis() - lastFlying;
         timerVar = ((timerVar * 14) + rate) / 15;
-        if (Math.abs(timerVar - 50) < 15) {
-            timerVar2 = Math.min(timerVar2 + 1, 15);
+        if (Math.abs(timerVar - 50) < 30) {
+            timerVar2 = Math.min(timerVar2 + 1, 30);
             if (timerVar2 == 10) {
                 balance = -250;
+            }
+            if (timerVar2 == 20) {
+                balance = -50;
             }
         } else {
             timerVar2 = MathUtil.rt(timerVar2, 1);
         }
-        balance += 49;
+        balance += 50;
         balance -= rate;
         if (balance > 10) {
-            balance = -10;
             buffer = Math.min(buffer + 1, 5);
             if (buffer > 1) {
-                fail();
+                fail("sent too many flying packets", "balance: " + balance);
             }
-        } else {
-            pass();
+            balance = 0;
         }
     }
 
