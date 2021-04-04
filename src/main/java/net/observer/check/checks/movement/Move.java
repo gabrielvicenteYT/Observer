@@ -2,7 +2,7 @@ package net.observer.check.checks.movement;
 
 import com.outil.event.events.MoveEvent;
 import com.outil.event.events.PacketEvent;
-import com.outil.packet.type.C03PacketPlayer;
+import com.outil.packet.type.C13PacketPlayerAbilities;
 import com.outil.util.MathUtil;
 import net.observer.check.Check;
 import org.bukkit.entity.Player;
@@ -45,6 +45,16 @@ public class Move extends Check {
     float airSpeed = 0.02F;
     float stepHeight = 0.6F;
     double speedBuffer = 0;
+    boolean creativeFly = false;
+
+    @Override
+    public void onPacket(PacketEvent e) {
+        if (e.getPacket() instanceof C13PacketPlayerAbilities) {
+            if (player.getAllowFlight()) {
+                creativeFly = true;
+            }
+        }
+    }
 
     @Override
     public void onMove(MoveEvent e) {
@@ -72,6 +82,8 @@ public class Move extends Check {
         groundspoof(e);
         // REDUCING VIOLATION LEVEL //
         pass();
+        // RESETTING THE CREATIVEFLY VARIABLE //
+        creativeFly = false;
     }
 
     public void updateCondition(MoveEvent e) {
@@ -86,32 +98,18 @@ public class Move extends Check {
 
     public void speed(MoveEvent e) {
         /*
-          basic horizontal prediction checks
-                                            */
-        if (ground > 2) {
-            double predictionX = lastDeltaX * 0.6F * 0.91F;
-            double predictionZ = lastDeltaZ * 0.6F * 0.91F;
-            double prediction = Math.hypot(predictionX, predictionZ) + 0.13F;
-            double diff = deltaX == 0 ? deltaZ == 0 ? 0 : Math.abs(deltaZ - predictionZ) : deltaZ == 0 ? Math.abs(deltaX - predictionX) : Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
-            if (diff > 0.13F) {
-                if (++speedBuffer > 2) {
-                    speedBuffer = 2;
-                    fail("moved unexpectedly (MotionH)", "diff: " + diff);
-                }
-            } else {
-                speedBuffer = MathUtil.rt(speedBuffer, 0.25);
+          basic horizontal prediction check
+                                           */
+        if (air > 2 || ground > 2) {
+            float add = e.isOnGround() ? 0.13F : 0.026F;
+            if (player.isFlying() || creativeFly) {
+                add += 0.098F;
             }
-            if (delta > prediction) {
-                fail("moved unexpectedly (Speed)", "delta: " + delta, "prediction: " + prediction);
-            }
-        }
-
-        if (air > 2) {
-            double predictionX = lastDeltaX * 0.91F;
-            double predictionZ = lastDeltaZ * 0.91F;
-            double prediction = Math.hypot(predictionX, predictionZ) + 0.026F;
+            double predictionX = e.isOnGround() ? lastDeltaX * 0.6F * 0.91F : lastDeltaX * 0.91F;
+            double predictionZ = e.isOnGround() ? lastDeltaZ * 0.6F * 0.91F : lastDeltaZ * 0.91F;
+            double prediction = Math.hypot(predictionX, predictionZ) + add;
             double diff = deltaX == 0 ? deltaZ == 0 ? 0 : Math.abs(deltaZ - predictionZ) : deltaZ == 0 ? Math.abs(deltaX - predictionX) : Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
-            if (diff > 0.026F) {
+            if (diff > add) {
                 if (++speedBuffer > 2) {
                     speedBuffer = 2;
                     fail("moved unexpectedly (MotionH)", "diff: " + diff);
@@ -127,7 +125,7 @@ public class Move extends Check {
 
     public void step(MoveEvent e) {
         if (deltaY > stepHeight && e.isOnGround()) {
-            fail("moved unexpectedly (Step)", "deltaY: " + deltaY + "stepHeight: " + stepHeight);
+            fail("moved unexpectedly (Step)", "deltaY: " + deltaY, "stepHeight: " + stepHeight);
         }
     }
 
