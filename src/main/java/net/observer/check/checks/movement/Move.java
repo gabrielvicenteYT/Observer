@@ -35,6 +35,9 @@ public class Move extends Check {
     double motionY = 0;
     double motionZ = 0;
     boolean serverGround = false;
+    float landMovementFactor = 0;
+    float jumpMovementFactor = 0;
+    float airSpeed = 0.02F;
     boolean failed = false;
 
     @Override
@@ -54,6 +57,8 @@ public class Move extends Check {
         deltaZ = e.getTo().getZ() - e.getFrom().getZ();
         delta = Math.hypot(deltaX, deltaZ);
         yaw = e.getTo().getYaw();
+        // UPDATING THE PLAYER'S CONDITION //
+        updateCondition(e);
         // RUNNING CHECKS //
         prediction(e);
         speed(e);
@@ -65,13 +70,25 @@ public class Move extends Check {
         }
     }
 
+    public void updateCondition(MoveEvent e) {
+
+    }
+
     public void prediction(MoveEvent e) {
 
     }
 
     public void speed(MoveEvent e) {
-        double predictionX = 0;
-        double predictionZ = 0;
+        if (e.isOnGround()) {
+            double predictionX = lastDeltaX * 0.6F * 0.91F;
+            double predictionZ = lastDeltaZ * 0.6F * 0.91F;
+            double diff = Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
+            debug("diff: &b" + diff);
+        } else {
+            double predictionX = lastDeltaX * 0.91F;
+            double predictionZ = lastDeltaZ * 0.91F;
+            double diff = Math.hypot(deltaX - predictionX, deltaZ - predictionZ);
+        }
     }
 
     public void step(MoveEvent e) {
