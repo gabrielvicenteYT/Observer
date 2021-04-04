@@ -50,7 +50,7 @@ public class Move extends Check {
     @Override
     public void onPacket(PacketEvent e) {
         if (e.getPacket() instanceof C13PacketPlayerAbilities) {
-            if (player.getAllowFlight()) {
+            if (player.getAllowFlight() && ((C13PacketPlayerAbilities) e.getPacket()).isFlying()) {
                 creativeFly = true;
             }
         }
