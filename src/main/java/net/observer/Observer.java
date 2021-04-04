@@ -4,6 +4,7 @@ import net.observer.banwave.BanwaveBlatant;
 import net.observer.banwave.BanwaveGhost;
 import net.observer.banwave.BanwaveType;
 import net.observer.check.CheckManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.BufferedWriter;
@@ -25,9 +26,15 @@ public final class Observer extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        instance = this;
+
         banwaveGhost = new BanwaveGhost();
         banwaveBlatant = new BanwaveBlatant();
         checkManager = new CheckManager();
+
+        Bukkit.getPluginManager().registerEvents(checkManager, instance);
+
     }
 
     @Override

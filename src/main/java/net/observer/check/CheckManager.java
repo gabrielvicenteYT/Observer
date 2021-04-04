@@ -1,9 +1,7 @@
 package net.observer.check;
 
-import net.observer.Observer;
 import net.observer.check.checks.other.Test;
 import net.observer.config.Config;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,10 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CheckManager implements Listener {
-    public CheckManager() {
-        Bukkit.getPluginManager().registerEvents(this, Observer.getInstance());
-    }
-
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         List<Check> checks = new ArrayList<>();
@@ -46,8 +40,13 @@ public class CheckManager implements Listener {
     public Boolean[] getBooleans(String name, CheckType checkType) {
         Boolean[] values = new Boolean[12];
         String check = name.split(" ")[0];
-        String type = name.split(" ")[1].replace("(", "").replace(")", "");
-        String path = "checks." + checkType.name().toLowerCase() + "." + check + "." + type + ".";
+        String path;
+        if (name.split(" ").length > 1) {
+            String type = name.split(" ")[1].replace("(", "").replace(")", "");
+            path = "checks." + checkType.name().toLowerCase() + "." + check + "." + type + ".";
+        } else {
+            path = "checks." + checkType.name().toLowerCase() + "." + check + ".";
+        }
         values[0] = Config.getBooleanFromConfig(path + "enabled");
         values[1] = Config.getBooleanFromConfig(path + "experimental");
         values[2] = Config.getBooleanFromConfig(path + "punishable");
@@ -57,8 +56,13 @@ public class CheckManager implements Listener {
     public Integer[] getIntegers(String name, CheckType checkType) {
         Integer[] values = new Integer[12];
         String check = name.split(" ")[0];
-        String type = name.split(" ")[1].replace("(", "").replace(")", "");
-        String path = "checks." + checkType.name().toLowerCase() + "." + check + "." + type + ".";
+        String path;
+        if (name.split(" ").length > 1) {
+            String type = name.split(" ")[1].replace("(", "").replace(")", "");
+            path = "checks." + checkType.name().toLowerCase() + "." + check + "." + type + ".";
+        } else {
+            path = "checks." + checkType.name().toLowerCase() + "." + check + ".";
+        }
         values[0] = Config.getIntegerFromConfig(path + "max");
         values[1] = Config.getIntegerFromConfig(path + "min");
         return values;
@@ -67,8 +71,13 @@ public class CheckManager implements Listener {
     public Double[] getDoubles(String name, CheckType checkType) {
         Double[] values = new Double[12];
         String check = name.split(" ")[0];
-        String type = name.split(" ")[1].replace("(", "").replace(")", "");
-        String path = "checks." + checkType.name().toLowerCase() + "." + check + "." + type + ".";
+        String path;
+        if (name.split(" ").length > 1) {
+            String type = name.split(" ")[1].replace("(", "").replace(")", "");
+            path = "checks." + checkType.name().toLowerCase() + "." + check + "." + type + ".";
+        } else {
+            path = "checks." + checkType.name().toLowerCase() + "." + check + ".";
+        }
         values[0] = Config.getDoubleFromConfig(path + "reduce");
         values[1] = Config.getDoubleFromConfig(path + "bufferCeil");
         values[2] = Config.getDoubleFromConfig(path + "bufferMax");
