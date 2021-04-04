@@ -1,0 +1,5 @@
+name: Observer
+version: ${project.version}
+main: net.observer.Observer
+authors: [ Orress, antiarithmo ]
+description: A minecraft anticheat
