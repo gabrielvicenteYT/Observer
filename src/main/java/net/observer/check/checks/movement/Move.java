@@ -117,7 +117,7 @@ public class Move extends Check {
             } else {
                 speedBuffer = MathUtil.rt(speedBuffer, 0.25);
             }
-            if (delta > prediction) {
+            if (delta > prediction && delta > 0.16) {
                 fail("moved unexpectedly (Speed)", "delta: " + delta, "prediction: " + prediction);
             }
         }
@@ -126,6 +126,9 @@ public class Move extends Check {
     public void step(MoveEvent e) {
         if (deltaY > stepHeight && e.isOnGround()) {
             fail("moved unexpectedly (Step)", "deltaY: " + deltaY, "stepHeight: " + stepHeight);
+        }
+        if (ground > 25 && deltaY < -0.05) {
+            fail("moved unexpectedly", "deltaY: " + deltaY, "ground: " + ground);
         }
     }
 
