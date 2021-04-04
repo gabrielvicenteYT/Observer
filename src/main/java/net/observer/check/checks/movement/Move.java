@@ -155,7 +155,7 @@ public class Move extends Check {
             if (buffer > 1) {
                 fail("sent too many flying packets", "balance: " + balance);
             }
-            balance = 0;
+            balance = -10;
         }
     }
 
