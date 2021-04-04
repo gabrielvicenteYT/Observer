@@ -1,0 +1,23 @@
+#                     #
+##  Observer Config  ##
+#                     #
+
+ban-cmd:
+
+punishment-type:
+
+checks:
+  other:
+    test:
+      enabled: true
+      punishable: true
+      experimental: true
+      min: 0
+      max: 10
+      reduce: 0.05
+      bufferCeil: 0
+      bufferMax: 0
+      bufferReduce: 0
+      preVlCeil: 0
+      preVlMax: 0
+      preVlReduce: 0

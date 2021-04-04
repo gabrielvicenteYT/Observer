@@ -29,6 +29,7 @@ public class Check extends PlayerListener {
     public boolean punishable;
     public int max;
     public int min;
+    public double reduce;
     public double buffer;
     public double bufferCeil;
     public double bufferMax;
@@ -41,8 +42,8 @@ public class Check extends PlayerListener {
     double vl = 0;
 
     public Check(Player player, String name, boolean enabled, boolean experimental, boolean punishable, int max, int min,
-                 double buffer, double bufferCeil, double bufferMax, double bufferReduce, double preVl, double preVlCeil,
-                 double preVlMax, double preVlReduce) {
+                 double reduce, double bufferCeil, double bufferMax, double bufferReduce, double preVlCeil, double preVlMax,
+                 double preVlReduce) {
         super(player);
         this.player = player;
         this.name = name;
@@ -51,15 +52,18 @@ public class Check extends PlayerListener {
         this.punishable = punishable;
         this.max = max;
         this.min = min;
-        this.buffer = buffer;
+        this.reduce = reduce;
         this.bufferCeil = bufferCeil;
         this.bufferMax = bufferMax;
         this.bufferReduce = bufferReduce;
-        this.preVl = preVl;
         this.preVlCeil = preVlCeil;
         this.preVlMax = preVlMax;
         this.preVlReduce = preVlReduce;
         OUtil.getInstance().addPlayerListener(player, this);
+    }
+
+    public void debug(String debug) {
+        player.sendMessage(Chat.getMessage("&bDebug &8» &7" + debug));
     }
 
     public void fail() {
@@ -130,6 +134,12 @@ public class Check extends PlayerListener {
         if (vl >= max) {
             punishPlayer();
         }
+    }
+
+    public void pass() {
+        vl = MathUtil.rt(vl, reduce);
+        buffer = MathUtil.rt(buffer, bufferReduce);
+        preVl = MathUtil.rt(preVl, preVlReduce);
     }
 
     public void punishPlayer() {
