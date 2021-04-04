@@ -131,6 +131,11 @@ public class Move extends Check {
           multi-version balance timer check
                                            */
         long rate = System.currentTimeMillis() - lastFlying;
+        if (rate > 1250) {
+            timerVar = rate * 1.25;
+            balance = rate * -2;
+            return;
+        }
         timerVar = ((timerVar * 14) + rate) / 15;
         if (Math.abs(timerVar - 50) < 30) {
             timerVar2 = Math.min(timerVar2 + 1, 30);
