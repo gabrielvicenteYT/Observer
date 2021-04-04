@@ -2,10 +2,7 @@ package net.observer.check;
 
 import com.outil.OUtil;
 import com.outil.chat.Chat;
-import com.outil.event.OListener;
 import com.outil.event.PlayerListener;
-import com.outil.event.events.ModEvent;
-import com.outil.event.events.PacketEvent;
 import com.outil.util.MathUtil;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;

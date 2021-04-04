@@ -2,9 +2,9 @@
 ##  Observer Config  ##
 #                     #
 
-ban-cmd:
+ban-cmd: tempban -s %player% 30d Unfair Advantage
 
-punishment-type:
+punishment-type: none
 
 checks:
   client:

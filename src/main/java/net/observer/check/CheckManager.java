@@ -3,6 +3,7 @@ package net.observer.check;
 import net.observer.check.checks.client.*;
 import net.observer.check.checks.movement.*;
 import net.observer.config.Config;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -48,9 +49,9 @@ public class CheckManager implements Listener {
         String path;
         if (name.split(" ").length > 1) {
             String type = name.split(" ")[1].replace("(", "").replace(")", "");
-            path = "checks." + checkType.name().toLowerCase() + "." + check + "." + type + ".";
+            path = "checks." + checkType.name().toLowerCase() + "." + check.toLowerCase() + "." + type.toLowerCase() + ".";
         } else {
-            path = "checks." + checkType.name().toLowerCase() + "." + check + ".";
+            path = "checks." + checkType.name().toLowerCase() + "." + name.toLowerCase() + ".";
         }
         values[0] = Config.getBooleanFromConfig(path + "enabled");
         values[1] = Config.getBooleanFromConfig(path + "experimental");
@@ -64,9 +65,9 @@ public class CheckManager implements Listener {
         String path;
         if (name.split(" ").length > 1) {
             String type = name.split(" ")[1].replace("(", "").replace(")", "");
-            path = "checks." + checkType.name().toLowerCase() + "." + check + "." + type + ".";
+            path = "checks." + checkType.name().toLowerCase() + "." + check.toLowerCase() + "." + type.toLowerCase() + ".";
         } else {
-            path = "checks." + checkType.name().toLowerCase() + "." + check + ".";
+            path = "checks." + checkType.name().toLowerCase() + "." + name.toLowerCase() + ".";
         }
         values[0] = Config.getIntegerFromConfig(path + "max");
         values[1] = Config.getIntegerFromConfig(path + "min");
@@ -79,9 +80,9 @@ public class CheckManager implements Listener {
         String path;
         if (name.split(" ").length > 1) {
             String type = name.split(" ")[1].replace("(", "").replace(")", "");
-            path = "checks." + checkType.name().toLowerCase() + "." + check + "." + type + ".";
+            path = "checks." + checkType.name().toLowerCase() + "." + check.toLowerCase() + "." + type.toLowerCase() + ".";
         } else {
-            path = "checks." + checkType.name().toLowerCase() + "." + check + ".";
+            path = "checks." + checkType.name().toLowerCase() + "." + name.toLowerCase() + ".";
         }
         values[0] = Config.getDoubleFromConfig(path + "reduce");
         values[1] = Config.getDoubleFromConfig(path + "bufferCeil");
