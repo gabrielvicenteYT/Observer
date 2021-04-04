@@ -82,7 +82,7 @@ public class Check extends PlayerListener {
         String GameMode = player.getGameMode().name();
         TextComponent message = new TextComponent();
         message.setText(cleanMessage);
-        String hoverMessage = "§7Ping: §c" + ping + "\n§7GameMode: §c" + GameMode + "\n\n§7Click to teleport...";
+        String hoverMessage = "§7Ping: §b" + ping + "\n§7GameMode: §b" + GameMode + "\n\n§7Click to teleport...";
         message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hoverMessage).create()));
         message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + player.getName()));
         if (vl >= min) {
@@ -116,7 +116,7 @@ public class Check extends PlayerListener {
         String GameMode = player.getGameMode().name();
         TextComponent message = new TextComponent();
         message.setText(cleanMessage);
-        StringBuilder hoverMessage = new StringBuilder("§7Ping: §c" + ping + "\n§7GameMode: §c" + GameMode + "\n" + "\n");
+        StringBuilder hoverMessage = new StringBuilder("§7Ping: §b" + ping + "\n§7GameMode: §b" + GameMode + "\n" + "\n");
         for (String s : fail) {
             hoverMessage.append("§7").append(s.replace('&', '§').replace(": ", ": §b").replace("(", "(§b").replace(")", "§7)")).append("\n");
         }
