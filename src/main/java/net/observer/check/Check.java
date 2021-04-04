@@ -116,11 +116,11 @@ public class Check extends PlayerListener {
         String GameMode = player.getGameMode().name();
         TextComponent message = new TextComponent();
         message.setText(cleanMessage);
-        StringBuilder hoverMessage = new StringBuilder("§7Ping: §c" + ping + "\n§7GameMode: §c" + GameMode + "\n");
+        StringBuilder hoverMessage = new StringBuilder("§7Ping: §c" + ping + "\n§7GameMode: §c" + GameMode + "\n" + "\n");
         for (String s : fail) {
-            hoverMessage.append(s).append("\n");
+            hoverMessage.append("§7").append(s.replace('&', '§').replace(": ", ": §b").replace("(", "(§b").replace(")", "§7)")).append("\n");
         }
-        hoverMessage.append("§7Click to teleport...");
+        hoverMessage.append("\n§7Click to teleport...");
         message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hoverMessage.toString()).create()));
         message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + player.getName()));
         if (vl >= min) {
