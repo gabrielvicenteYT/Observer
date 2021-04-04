@@ -58,13 +58,17 @@ public class Move extends Check {
 
     @Override
     public void onMove(MoveEvent e) {
-        // SETTING UP LAST VARIABLES //
+        /*
+          SETTING UP LAST TICK'S VARIABLES
+                                          */
         lastDeltaX = deltaX;
         lastDeltaY = deltaY;
         lastDeltaZ = deltaZ;
         lastDelta = delta;
         lastYaw = yaw;
-        // SETTING UP CURRENT VARIABLES //
+        /*
+          SETTING UP CURRENT TICK'S VARIABLES
+                                             */
         playerX = e.getTo().getX();
         playerY = e.getTo().getY();
         playerZ = e.getTo().getZ();
@@ -73,33 +77,47 @@ public class Move extends Check {
         deltaZ = e.getTo().getZ() - e.getFrom().getZ();
         delta = Math.hypot(deltaX, deltaZ);
         yaw = e.getTo().getYaw();
-        // UPDATING THE PLAYER'S CONDITION //
+        /*
+          UPDATING THE PLAYER'S CONDITION
+                                         */
         updateCondition(e);
-        // RUNNING CHECKS //
+        /*
+          RUNNING CHECKS
+                        */
         prediction(e);
         speed(e);
         step(e);
         groundspoof(e);
-        // REDUCING VIOLATION LEVEL //
+        /*
+          REDUCING VIOLATION LEVEL
+                                  */
         pass();
-        // RESETTING THE CREATIVEFLY VARIABLE //
+        /*
+          RESETTING THE CREATIVEFLY VARIABLE
+                                            */
         creativeFly = false;
     }
 
     public void updateCondition(MoveEvent e) {
+        /*
+          to-do: add a proper block wrapper to OUtils, make the predictions account
+                 for slipperiness, block bounding boxes, etc.
+                                                                                   */
         air = e.isOnGround() ? 0 : Math.min(air + 1, 100);
         ground = e.isOnGround() ? Math.min(ground + 1, 100) : 0;
         landMovementFactor = e.getPlayer().isSprinting() ? 0.1F : 0.13F;
     }
 
     public void prediction(MoveEvent e) {
-
+        /*
+          to-do: add a full prediction for Y
+                                            */
     }
 
     public void speed(MoveEvent e) {
         /*
-          basic horizontal prediction check
-                                           */
+          basic horizontal movement prediction check
+                                                    */
         if (air > 2 || ground > 2) {
             float add = e.isOnGround() ? 0.13F : 0.026F;
             if (player.isFlying() || creativeFly) {
@@ -112,23 +130,35 @@ public class Move extends Check {
             if (diff > add) {
                 if (++speedBuffer > 2) {
                     speedBuffer = 2;
-                    fail("moved unexpectedly (MotionH)", "diff: " + diff);
+                    fail("moved unexpectedly (Strafe/Speed)", "diff: " + diff);
                 }
             } else {
                 speedBuffer = MathUtil.rt(speedBuffer, 0.25);
             }
-            if (delta > prediction && delta > 0.16) {
+            if (delta > prediction && delta > 0.2) {
                 fail("moved unexpectedly (Speed)", "delta: " + delta, "prediction: " + prediction);
             }
         }
     }
 
     public void step(MoveEvent e) {
+        /*
+          detecting stepHeight changes
+                                      */
         if (deltaY > stepHeight && e.isOnGround()) {
             fail("moved unexpectedly (Step)", "deltaY: " + deltaY, "stepHeight: " + stepHeight);
         }
+        /*
+          detecting phase/noclip/whatever module might do something as dumb as this
+                                                                                   */
         if (ground > 25 && deltaY < -0.05) {
-            fail("moved unexpectedly", "deltaY: " + deltaY, "ground: " + ground);
+            fail("moved unexpectedly (Other)", "deltaY: " + deltaY, "ground: " + ground);
+        }
+        /*
+          to-do: add an onSteppable exemption
+                                             */
+        if (playerY % 1.0 == 0 && deltaY > 0) {
+            fail("moved unexpectedly (Step)", "deltaY: " + deltaY);
         }
     }
 
