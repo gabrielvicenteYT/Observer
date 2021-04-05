@@ -2,10 +2,7 @@ package net.observer.banwave;
 
 import com.outil.OUtil;
 import com.outil.event.OListener;
-import com.outil.event.events.ChunkLoadEvent;
-import com.outil.event.events.ModEvent;
-import com.outil.event.events.MoveEvent;
-import com.outil.event.events.PacketEvent;
+import com.outil.event.events.*;
 
 public class BanwaveGhost implements OListener {
     public BanwaveGhost() {
@@ -24,6 +21,11 @@ public class BanwaveGhost implements OListener {
 
     @Override
     public void onMove(MoveEvent moveEvent) {
+
+    }
+
+    @Override
+    public void onHit(HitEvent hitEvent) {
 
     }
 

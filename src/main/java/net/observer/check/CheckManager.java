@@ -1,8 +1,10 @@
 package net.observer.check;
 
 import net.observer.check.checks.client.*;
+import net.observer.check.checks.combat.*;
 import net.observer.check.checks.movement.*;
 import net.observer.check.checks.render.*;
+import net.observer.check.checks.world.ScaffoldA;
 import net.observer.config.Config;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,7 +30,8 @@ public class CheckManager implements Listener {
         name = "Client (E)"; checks.add(new ClientE(player, name, getBooleans(name, type)[0], getBooleans(name, type)[1], getBooleans(name, type)[2], getIntegers(name, type)[0], getIntegers(name, type)[1], getDoubles(name, type)[0], getDoubles(name, type)[1], getDoubles(name, type)[2], getDoubles(name, type)[3], getDoubles(name, type)[4], getDoubles(name, type)[5], getDoubles(name, type)[6]));
         // COMBAT
         type = CheckType.COMBAT;
-
+        name = "HitBox (A)"; checks.add(new HitBoxA(player, name, getBooleans(name, type)[0], getBooleans(name, type)[1], getBooleans(name, type)[2], getIntegers(name, type)[0], getIntegers(name, type)[1], getDoubles(name, type)[0], getDoubles(name, type)[1], getDoubles(name, type)[2], getDoubles(name, type)[3], getDoubles(name, type)[4], getDoubles(name, type)[5], getDoubles(name, type)[6]));
+        name = "HitBox (B)"; checks.add(new HitBoxB(player, name, getBooleans(name, type)[0], getBooleans(name, type)[1], getBooleans(name, type)[2], getIntegers(name, type)[0], getIntegers(name, type)[1], getDoubles(name, type)[0], getDoubles(name, type)[1], getDoubles(name, type)[2], getDoubles(name, type)[3], getDoubles(name, type)[4], getDoubles(name, type)[5], getDoubles(name, type)[6]));
         // MOVEMENT
         type = CheckType.MOVEMENT;
         name = "Move"; checks.add(new Move(player, name, getBooleans(name, type)[0], getBooleans(name, type)[1], getBooleans(name, type)[2], getIntegers(name, type)[0], getIntegers(name, type)[1], getDoubles(name, type)[0], getDoubles(name, type)[1], getDoubles(name, type)[2], getDoubles(name, type)[3], getDoubles(name, type)[4], getDoubles(name, type)[5], getDoubles(name, type)[6]));
@@ -43,7 +46,7 @@ public class CheckManager implements Listener {
         name = "ChestESP"; checks.add(new ChestESP(player, name, getBooleans(name, type)[0], getBooleans(name, type)[1], getBooleans(name, type)[2], getIntegers(name, type)[0], getIntegers(name, type)[1], getDoubles(name, type)[0], getDoubles(name, type)[1], getDoubles(name, type)[2], getDoubles(name, type)[3], getDoubles(name, type)[4], getDoubles(name, type)[5], getDoubles(name, type)[6], getInteger(name, type, "chunkLoad")));
         // WORLD
         type = CheckType.WORLD;
-
+        name = "Scaffold (A)"; checks.add(new ScaffoldA(player, name, getBooleans(name, type)[0], getBooleans(name, type)[1], getBooleans(name, type)[2], getIntegers(name, type)[0], getIntegers(name, type)[1], getDoubles(name, type)[0], getDoubles(name, type)[1], getDoubles(name, type)[2], getDoubles(name, type)[3], getDoubles(name, type)[4], getDoubles(name, type)[5], getDoubles(name, type)[6]));
     }
 
     public Boolean[] getBooleans(String name, CheckType checkType) {

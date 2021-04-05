@@ -29,7 +29,7 @@ public class ChestESP extends Check {
             lastCheck = 0;
             return;
         }
-        if (++lastCheck > 13) {
+        if (++lastCheck > 15) {
             List<Block> chests = PlayerUtil.getChests(player, e.getTo(), chunkLoad);
             for (Block chest : chests) {
                 if (PlayerUtil.canSeeBlock(player, e.getTo(), new Loc(chest.getLocation()))) {

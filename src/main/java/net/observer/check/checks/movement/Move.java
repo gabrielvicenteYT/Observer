@@ -151,9 +151,11 @@ public class Move extends Check {
         balance += 50;
         balance -= rate;
         if (balance > 10) {
-            buffer = Math.min(buffer + 1, 5);
-            if (buffer > 1) {
-                fail("sent too many flying packets", "balance: " + balance);
+            if (balance > 11) {
+                buffer = Math.min(buffer + 1, 5);
+                if (buffer > 1) {
+                    fail("sent too many flying packets", "balance: " + balance);
+                }
             }
             balance = -10;
         }
