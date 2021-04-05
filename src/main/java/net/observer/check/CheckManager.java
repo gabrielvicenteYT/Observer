@@ -2,8 +2,8 @@ package net.observer.check;
 
 import net.observer.check.checks.client.*;
 import net.observer.check.checks.movement.*;
+import net.observer.check.checks.render.*;
 import net.observer.config.Config;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,6 +38,9 @@ public class CheckManager implements Listener {
         // PACKET
         type = CheckType.PACKET;
 
+        // PACKET
+        type = CheckType.RENDER;
+        name = "ChestESP"; checks.add(new ChestESP(player, name, getBooleans(name, type)[0], getBooleans(name, type)[1], getBooleans(name, type)[2], getIntegers(name, type)[0], getIntegers(name, type)[1], getDoubles(name, type)[0], getDoubles(name, type)[1], getDoubles(name, type)[2], getDoubles(name, type)[3], getDoubles(name, type)[4], getDoubles(name, type)[5], getDoubles(name, type)[6], getInteger(name, type, "chunkLoad")));
         // WORLD
         type = CheckType.WORLD;
 
@@ -92,5 +95,41 @@ public class CheckManager implements Listener {
         values[5] = Config.getDoubleFromConfig(path + "preVlMax");
         values[6] = Config.getDoubleFromConfig(path + "preVlReduce");
         return values;
+    }
+
+    public boolean getBoolean(String name, CheckType checkType, String key) {
+        String check = name.split(" ")[0];
+        String path;
+        if (name.split(" ").length > 1) {
+            String type = name.split(" ")[1].replace("(", "").replace(")", "");
+            path = "checks." + checkType.name().toLowerCase() + "." + check.toLowerCase() + "." + type.toLowerCase() + "." + key;
+        } else {
+            path = "checks." + checkType.name().toLowerCase() + "." + name.toLowerCase() + "." + key;
+        }
+        return Config.getBooleanFromConfig(path);
+    }
+
+    public int getInteger(String name, CheckType checkType, String key) {
+        String check = name.split(" ")[0];
+        String path;
+        if (name.split(" ").length > 1) {
+            String type = name.split(" ")[1].replace("(", "").replace(")", "");
+            path = "checks." + checkType.name().toLowerCase() + "." + check.toLowerCase() + "." + type.toLowerCase() + "." + key;
+        } else {
+            path = "checks." + checkType.name().toLowerCase() + "." + name.toLowerCase() + "." + key;
+        }
+        return Config.getIntegerFromConfig(path);
+    }
+
+    public double getDouble(String name, CheckType checkType, String key) {
+        String check = name.split(" ")[0];
+        String path;
+        if (name.split(" ").length > 1) {
+            String type = name.split(" ")[1].replace("(", "").replace(")", "");
+            path = "checks." + checkType.name().toLowerCase() + "." + check.toLowerCase() + "." + type.toLowerCase() + "." + key;
+        } else {
+            path = "checks." + checkType.name().toLowerCase() + "." + name.toLowerCase() + "." + key;
+        }
+        return Config.getDoubleFromConfig(path);
     }
 }

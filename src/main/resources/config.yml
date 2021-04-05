@@ -88,3 +88,18 @@ checks:
       preVlCeil: 0
       preVlMax: 0
       preVlReduce: 0
+  render:
+    chestesp:
+      enabled: true
+      punishable: false
+      experimental: true
+      min: 0
+      max: 0
+      reduce: 0
+      bufferCeil: 0
+      bufferMax: 0
+      bufferReduce: 0
+      preVlCeil: 0
+      preVlMax: 0
+      preVlReduce: 0
+      chunkLoad: 4
