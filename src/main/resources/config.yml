@@ -102,4 +102,4 @@ checks:
       preVlCeil: 0
       preVlMax: 0
       preVlReduce: 0
-      chunkLoad: 4
+      chunkLoad: 8
