@@ -33,7 +33,7 @@ public class ScaffoldA extends Check {
     public void onPacket(PacketEvent e) {
         if (e.getPacket() instanceof C08PacketPlayerBlockPlacement) {
             C08PacketPlayerBlockPlacement packet = (C08PacketPlayerBlockPlacement) e.getPacket();
-            if (packet.getEnumFacing() != EnumFacing.NONE) {
+            if (packet.getEnumFacing() != EnumFacing.NONE && e.getPlayer().getItemInHand().getType().isBlock()) {
                 blockLoc = new Loc(packet.getBlockPosition());
                 if (!PlayerUtil.lookingAtBlock(playerLoc, blockLoc)) check = true;
             }
